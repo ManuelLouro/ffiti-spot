@@ -1,5 +1,5 @@
 # React + TypeScript + Vite
-
+FFiti Spot
 
 Currently, two official plugins are available:
 
