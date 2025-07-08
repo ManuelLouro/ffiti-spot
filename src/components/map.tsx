@@ -1,21 +1,35 @@
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { GoogleMap, LoadScript } from '@react-google-maps/api';
+import { useEffect, useState } from 'react';
 
 const containerStyle = {
   width: '100%',
   height: '100vh',
 };
 
-const center = {
-  lat: 40.4168, // Example: Madrid
-  lng: -3.7038,
-};
-
 const GraffitiMap = () => {
+  const [center, setCenter] = useState<{ lat: number; lng: number }>({ lat: 41.3851, lng: 2.1734 }); // default center
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          setCenter({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
+        },
+        () => {
+          // fallback if error or denied
+          setCenter({ lat: 41.3851, lng: 2.1734 });
+        }
+      );
+    }
+  }, []);
+
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12}>
-        {/* Example Marker */}
-        <Marker position={{ lat: 40.4168, lng: -3.7038 }} />
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14}>
+        {/* No markers here */}
       </GoogleMap>
     </LoadScript>
   );
