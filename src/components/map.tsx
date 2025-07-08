@@ -6,6 +6,14 @@ const containerStyle = {
   height: '100vh',
 };
 
+const mapOptions = {
+  styles: [
+    { featureType: 'poi', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+    { featureType: 'transit', elementType: 'labels', stylers: [{ visibility: 'off' }] },
+    { featureType: 'poi.business', stylers: [{ visibility: 'off' }] },
+  ],
+};
+
 const GraffitiMap = () => {
   const [center, setCenter] = useState<{ lat: number; lng: number }>({ lat: 41.3851, lng: 2.1734 }); // default center
 
@@ -28,7 +36,12 @@ const GraffitiMap = () => {
 
   return (
     <LoadScript googleMapsApiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={14}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={19}
+        options={mapOptions}
+      >
         {/* No markers here */}
       </GoogleMap>
     </LoadScript>
